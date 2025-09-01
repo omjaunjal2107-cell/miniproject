@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* Variables */
+:root {
+  --white-color: #007902;
+  --light-gray-color: #8dff83;
+  --black-color: #004b18;
+  /* add only used variables below */
+  --border-color: #ccc;
+  --border-radius: 14px;
+  --shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+}
+
+.navbar .nav-section,
+.navbar .search-form,
+.navbar .nav-logo {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+}
+
+.navbar .nav-button {
+  border: none;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar .nav-button i {
+  font-size: 1.5rem;
+}
+
+.navbar .logo-image,
+.navbar .user-image {
+  width: 32px;
+  height: auto;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.navbar .nav-logo {
+  display: flex;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.25rem;
+  color: var(--black-color);
+}
+
+.navbar .nav-logo .logo-text {
+  color: var(--black-color);
+}
+
+/* Search */
+.search-form {
+  display: flex;
+  flex: 1;
+  max-width: 800px;
+}
+
+.search-input {
+  flex: 1;
+  height: 60px;
+  padding: 0 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px 0 0 20px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-button {
+  padding: 0 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0 20px 20px 0;
+  background-color: transparent;
+}
+
+/* Categories */
+.category-list {
+  display: flex;
+  gap: 0.7rem;
+  overflow-x: auto;
+  padding: 0.75rem 0;
+}
+
+.category-button {
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.5rem;
+  background: var(--light-gray-color);
+}
+
+/* Layout */
+.main-layout .content-wrapper {
+  padding: 0 1rem;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .search-form {
+    width: 100%;
+  }
+
+  .nav-section {
+    justify-content: center;
+  }
+}

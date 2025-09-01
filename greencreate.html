@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>GreenCREATE - Connecting Farmers & Consumers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #ead466 0%, #72a24b 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+           /* background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;*/
+
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c5530;
+            text-decoration: none;
+        }
+
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2c5530;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #2c5530;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e3a21;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #2c5530;
+            border: 2px solid #2c5530;
+        }
+
+        .btn-secondary:hover {
+            background: #2c5530;
+            color: white;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Content Sections */
+        .section {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin: 2rem 0;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+            
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section h2 {
+            color: #2c5530;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        /* Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #2c5530;
+        }
+
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #2c5530, #4a7c59);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 0.5rem 0;
+        }
+
+        .product-farmer {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Dashboard Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading and Success States */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">
+                <img src="./WhatsApp_Image_2025-08-21_at_19.39.14_d66e43ad-removebg-preview.png" alt="logo-image" style="width: 50px;"> GreenCREATE</a>
+            <ul class="nav-links">
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('marketplace')">Marketplace</a></li>
+                <li><a href="#" onclick="showSection('farmer-dashboard')">Farmer Dashboard</a></li>
+                <li><a href="#" onclick="showSection('buyer-dashboard')">Buyer Dashboard</a></li>
+                <li><a href="#" onclick="showSection('admin-dashboard')">Admin</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-secondary" onclick="showSection('login')">Login</a>
+                <a href="#" class="btn btn-primary" onclick="showSection('register')">Register</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active" style=" background: linear-gradient(rgba(45, 90, 39, 0.8), rgba(74, 124, 89, 0.8)), 
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23a8d5ba" width="1200" height="600"/><path fill="%234a7c59" d="M0 400c100-50 300-100 600-50s500 100 600 50v200H0z"/></svg>');>
+            <div class="hero">
+                <h1>Connect Farmers with Buyers</h1>
+                <p>A transparent platform for fresh, locally sourced produce. Fair prices, quality guaranteed, timely delivery.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showSection('register')">Join as Farmer</a>
+                    <a href="#" class="btn btn-secondary" onclick="showSection('marketplace')">Browse Produce</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marketplace Section -->
+        <section id="marketplace" class="section">
+            <h2>Fresh Produce Marketplace</h2>
+            <div class="form-group">
+                <input type="text" id="search" placeholder="Search for vegetables, fruits..." onkeyup="filterProducts()">
+            </div>
+            <div id="products-container" class="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Farmer Dashboard Section -->
+        <section id="farmer-dashboard" class="section">
+            <h2>Farmer Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <div>Products Listed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹15,680</div>
+                    <div>Monthly Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">42</div>
+                    <div>Orders Completed</div>
+                </div>
+            </div>
+            
+            <h3>Add New Product</h3>
+            <form id="product-form" onsubmit="addProduct(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="product-name">Product Name</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <select id="product-category" required>
+                            <option value="">Select Category</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="grains">Grains</option>
+                            <option value="herbs">Herbs</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Price per KG (₹)</label>
+                        <input type="number" id="product-price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-quantity">Available Quantity (KG)</label>
+                        <input type="number" id="product-quantity" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Description</label>
+                    <textarea id="product-description" rows="3" placeholder="Describe your product quality, farming methods, etc."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </form>
+        </section>
+
+        <!-- Buyer Dashboard Section -->
+        <section id="buyer-dashboard" class="section">
+            <h2>Buyer Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div>Orders This Month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹3,240</div>
+                    <div>Total Spent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div>Favorite Farmers</div>
+                </div>
+            </div>
+            
+            <h3>Recent Orders</h3>
+            <div id="orders-container">
+                <!-- Orders will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Admin Dashboard Section -->
+        <section id="admin-dashboard" class="section">
+            <h2>Admin Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">156</div>
+                    <div>Active Farmers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">432</div>
+                    <div>Registered Buyers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹2,45,680</div>
+                    <div>Platform Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div>Customer Satisfaction</div>
+                </div>
+            </div>
+            
+            <h3>Platform Management</h3>
+            <div class="form-grid">
+                <button class="btn btn-primary" onclick="showUserManagement()">Manage Users</button>
+                <button class="btn btn-primary" onclick="showOrderManagement()">Order Management</button>
+                <button class="btn btn-primary" onclick="showReports()">Generate Reports</button>
+                <button class="btn btn-primary" onclick="showSettings()">Platform Settings</button>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+            <h2>Login to Your Account</h2>
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-type">Login as</label>
+                    <select id="user-type" required>
+                        <option value="">Select User Type</option>
+                        <option value="farmer">Farmer</option>
+                        <option value="buyer">Buyer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="section">
+            <h2>Create New Account</h2>
+            <form id="register-form" onsubmit="handleRegistration(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email</label>
+                        <input type="email" id="reg-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <input type="tel" id="reg-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-type">Register as</label>
+                        <select id="reg-type" required onchange="toggleFarmerFields()">
+                            <option value="">Select Type</option>
+                            <option value="farmer">Farmer</option>
+                            <option value="buyer">Buyer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="farmer-fields" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="farm-name">Farm Name</label>
+                            <input type="text" id="farm-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="farm-size">Farm Size (acres)</label>
+                            <input type="number" id="farm-size" step="0.1">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="reg-address">Address</label>
+                    <textarea id="reg-address" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Account</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // Sample data structure stored in memory
+        const appData = {
+            users: [
+                {
+                    id: 1,
+                    name: "Rajesh Kumar",
+                    email: "rajesh@farm.com",
+                    type: "farmer",
+                    farmName: "Green Valley Farm",
+                    location: "Punjab"
+                },
+                {
+                    id: 2,
+                    name: "Priya Sharma",
+                    email: "priya@buyer.com",
+                    type: "buyer",
+                    location: "Delhi"
+                }
+            ],
+            products: [
+                {
+                    id: 1,
+                    name: "Fresh Tomatoes",
+                    category: "vegetables",
+                    price: 45.00,
+                    quantity: 100,
+                    farmerId: 1,
+                    farmerName: "Rajesh Kumar",
+                    description: "Organically grown red tomatoes",
+                    location: "Punjab"
+                },
+                {
+                    id: 2,
+                    name: "Basmati Rice",
+                    category: "grains",
+                    price: 120.00,
+                    quantity: 500,
+                    farmerId: 1,
+                    farmerName: "Rajesh Kumar",
+                    description: "Premium quality basmati rice",
+                    location: "Punjab"
+                },
+                {
+                    id: 3,
+                    name: "Green Spinach",
+                    category: "vegetables",
+                    price: 35.00,
+                    quantity: 50,
+                    farmerId: 1,
+                    farmerName: "Rajesh Kumar",
+                    description: "Fresh leafy spinach",
+                    location: "Punjab"
+                },
+                {
+                    id: 4,
+                    name: "Fresh Apples",
+                    category: "fruits",
+                    price: 180.00,
+                    quantity: 75,
+                    farmerId: 1,
+                    farmerName: "Rajesh Kumar",
+                    description: "Crisp red apples from hill station",
+                    location: "Punjab"
+                }
+            ],
+            orders: [
+                {
+                    id: 1,
+                    buyerId: 2,
+                    productId: 1,
+                    quantity: 5,
+                    totalAmount: 225.00,
+                    status: "delivered",
+                    date: "2024-08-20"
+                }
+            ],
+            currentUser: null
+        };
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Load section-specific data
+            if (sectionId === 'marketplace') {
+                loadProducts();
+            } else if (sectionId === 'buyer-dashboard') {
+                loadOrders();
+            }
+        }
+
+        // Product management
+        function addProduct(event) {
+            event.preventDefault();
+            
+            const product = {
+                id: appData.products.length + 1,
+                name: document.getElementById('product-name').value,
+                category: document.getElementById('product-category').value,
+                price: parseFloat(document.getElementById('product-price').value),
+                quantity: parseInt(document.getElementById('product-quantity').value),
+                farmerId: 1, // Mock farmer ID
+                farmerName: "Current Farmer",
+                description: document.getElementById('product-description').value,
+                location: "Your Location"
+            };
+            
+            appData.products.push(product);
+            
+            // Show success message
+            showMessage('Product added successfully!', 'success');
+            
+            // Reset form
+            document.getElementById('product-form').reset();
+            
+            // Refresh products if marketplace is active
+            if (document.getElementById('marketplace').classList.contains('active')) {
+                loadProducts();
+            }
+        }
+
+        function loadProducts() {
+            const container = document.getElementById('products-container');
+            container.innerHTML = '';
+            
+            appData.products.forEach(product => {
+                const productCard = createProductCard(product);
+                container.appendChild(productCard);
+            });
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <div class="product-image">
+                    ${getProductEmoji(product.category)} ${product.name}
+                </div>
+                <div class="product-info">
+                    <h3>${product.name}</h3>
+                    <div class="product-price">₹${product.price}/kg</div>
+                    <div class="product-farmer">By: ${product.farmerName}</div>
+                    <p>${product.description}</p>
+                    <p><strong>Available:</strong> ${product.quantity} kg</p>
+                    <p><strong>Location:</strong> ${product.location}</p>
+                    <button class="btn btn-primary" onclick="orderProduct(${product.id})">Order Now</button>
+                </div>
+            `;
+            return card;
+        }
+
+        function getProductEmoji(category) {
+            const emojis = {
+                vegetables: '🥕',
+                fruits: '🍎',
+                grains: '🌾',
+                herbs: '🌿'
+            };
+            return emojis[category] || '🌱';
+        }
+
+        function filterProducts() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const productCards = document.querySelectorAll('.product-card');
+            
+            productCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+
+        function orderProduct(productId) {
+            const product = appData.products.find(p => p.id === productId);
+            if (product) {
+                const quantity = prompt(`How many kg of ${product.name} would you like to order?`, '1');
+                if (quantity && quantity > 0) {
+                    const order = {
+                        id: appData.orders.length + 1,
+                        buyerId: 2, // Mock buyer ID
+                        productId: productId,
+                        quantity: parseInt(quantity),
+                        totalAmount: product.price * parseInt(quantity),
+                        status: 'pending',
+                        date: new Date().toISOString().split('T')[0]
+                    };
+                    
+                    appData.orders.push(order);
+                    showMessage(`Order placed successfully! Total: ₹${order.totalAmount}`, 'success');
+                }
+            }
+        }
+
+        // Order management
+        function loadOrders() {
+            const container = document.getElementById('orders-container');
+            container.innerHTML = '';
+            
+            appData.orders.forEach(order => {
+                const product = appData.products.find(p => p.id === order.productId);
+                const orderCard = document.createElement('div');
+                orderCard.className = 'product-card';
+                orderCard.innerHTML = `
+                    <div class="product-info">
+                        <h3>Order #${order.id}</h3>
+                        <p><strong>Product:</strong> ${product ? product.name : 'Unknown'}</p>
+                        <p><strong>Quantity:</strong> ${order.quantity} kg</p>
+                        <p><strong>Total:</strong> ₹${order.totalAmount}</p>
+                        <p><strong>Status:</strong> <span style="color: ${getStatusColor(order.status)}">${order.status}</span></p>
+                        <p><strong>Date:</strong> ${order.date}</p>
+                    </div>
+                `;
+                container.appendChild(orderCard);
+            });
+        }
+
+        function getStatusColor(status) {
+            const colors = {
+                pending: '#f39c12',
+                confirmed: '#3498db',
+                shipped: '#e67e22',
+                delivered: '#27ae60',
+                cancelled: '#e74c3c'
+            };
+            return colors[status] || '#333';
+        }
+
+        // Authentication
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const userType = document.getElementById('user-type').value;
+            
+            // Mock authentication
+            appData.currentUser = { email, type: userType };
+            
+            showMessage('Login successful!', 'success');
+            
+            // Redirect based on user type
+            setTimeout(() => {
+                if (userType === 'farmer') {
+                    showSection('farmer-dashboard');
+                } else if (userType === 'buyer') {
+                    showSection('buyer-dashboard');
+                } else if (userType === 'admin') {
+                    showSection('admin-dashboard');
+                }
+            }, 1000);
+        }
+
+        function handleRegistration(event) {
+            event.preventDefault();
+            
+            const userData = {
+                id: appData.users.length + 1,
+                name: document.getElementById('reg-name').value,
+                email: document.getElementById('reg-email').value,
+                phone: document.getElementById('reg-phone').value,
+                type: document.getElementById('reg-type').value,
+                address: document.getElementById('reg-address').value
+            };
+            
+            if (userData.type === 'farmer') {
+                userData.farmName = document.getElementById('farm-name').value;
+                userData.farmSize = document.getElementById('farm-size').value;
+            }
+            
+            appData.users.push(userData);
+            showMessage('Registration successful! Please login.', 'success');
+            
+            setTimeout(() => {
+                showSection('login');
+            }, 1500);
+        }
+
+        function toggleFarmerFields() {
+            const userType = document.getElementById('reg-type').value;
+            const farmerFields = document.getElementById('farmer-fields');
+            farmerFields.style.display = userType === 'farmer' ? 'block' : 'none';
+        }
+
+        // Admin functions
+        function showUserManagement() {
+            showMessage(`Total Users: ${appData.users.length}`, 'info');
+        }
+
+        function showOrderManagement() {
+            showMessage(`Total Orders: ${appData.orders.length}`, 'info');
+        }
+
+        function showReports() {
+            const totalRevenue = appData.orders.reduce((sum, order) => sum + order.totalAmount, 0);
+            showMessage(`Platform Revenue: ₹${totalRevenue.toFixed(2)}`, 'info');
+        }
+
+        function showSettings() {
+            showMessage('Platform settings panel would open here', 'info');
+        }
+
+        // Utility functions
+        function showMessage(message, type = 'info') {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = type === 'success' ? 'success-message' : 
+                                  type === 'error' ? 'error-message' : 'success-message';
+            messageDiv.textContent = message;
+            
+            // Insert at the beginning of the active section
+            const activeSection = document.querySelector('.section.active');
+            activeSection.insertBefore(messageDiv, activeSection.firstChild);
+            
+            // Remove message after 3 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.parentNode.removeChild(messageDiv);
+                }
+            }, 3000);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            
+            // Auto-show marketplace for demo
+            setTimeout(() => {
+                if (document.getElementById('home').classList.contains('active')) {
+                    showSection('marketplace');
+                }
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

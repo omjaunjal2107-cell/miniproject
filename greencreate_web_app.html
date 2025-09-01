@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenCREATE - Product Requirements Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .navigation {
+            background: #34495e;
+            padding: 1rem 0;
+            position: sticky;
+            top: 120px;
+            z-index: 99;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 0 1rem;
+        }
+
+        .nav-item {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: #2ecc71;
+            border-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 3px solid #2ecc71;
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #ecf0f1;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            border-color: #2ecc71;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .epic-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .epic-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .user-stories {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .user-story {
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tech-category {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .tech-category h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .roadmap-phase {
+            position: relative;
+            margin-left: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .roadmap-phase::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 1.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: #2ecc71;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #2ecc71;
+        }
+
+        .phase-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .phase-duration {
+            background: #2ecc71;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .list-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .risk-item {
+            background: #fff5f5;
+            border-left: 4px solid #e74c3c;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+        }
+
+        .risk-title {
+            font-weight: 600;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ecf0f1;
+            border-top: 4px solid #2ecc71;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .nav-container { justify-content: flex-start; }
+            .content { padding: 1rem; }
+            .roadmap-phase { margin-left: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 id="product-name">Loading...</h1>
+            <p class="subtitle" id="product-subtitle">Loading product information...</p>
+        </header>
+
+        <nav class="navigation">
+            <div class="nav-container" id="navigation">
+                <!-- Navigation items will be populated by JavaScript -->
+            </div>
+        </nav>
+
+        <main class="content">
+            <div class="search-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" class="search-input" id="search" placeholder="Search through the PRD content...">
+            </div>
+
+            <div id="content-sections">
+                <!-- Content sections will be populated by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // GreenCREATE PRD Data
+        const prdData = {
+            "product_requirements_document": {
+                "metadata": {
+                    "product_name": "GreenCREATE",
+                    "version": "1.0",
+                    "date": "2025-08-22",
+                    "document_owner": "Product Team",
+                    "status": "Draft"
+                },
+                "executive_summary": {
+                    "description": "GreenCREATE is an innovative digital marketplace platform that empowers small-scale farmers by connecting them directly with conscious consumers. The platform eliminates traditional supply chain inefficiencies, promotes sustainable agriculture, and creates a transparent ecosystem where fresh produce flows directly from farm to table while ensuring fair compensation for farmers and affordable prices for consumers."
+                },
+                "problem_statement": {
+                    "overview": "Small-scale farmers face significant barriers in efficiently marketing their produce, setting competitive prices, and expanding their reach beyond local markets. Simultaneously, consumers struggle to access fresh, locally sourced vegetables at fair prices with reliable delivery options.",
+                    "key_pain_points": {
+                        "farmers": ["Limited market access", "Poor pricing visibility", "Dependency on middlemen", "Lack of direct customer relationships"],
+                        "consumers": ["Difficulty finding fresh local produce", "Price transparency issues", "Unreliable delivery options"],
+                        "market": ["Inefficient supply chain", "Food waste", "Lack of trust mechanisms", "Fragmented marketplace"]
+                    }
+                },
+                "product_vision": {
+                    "statement": "To CREATE a sustainable future where small farmers thrive through direct connections with conscious consumers, fostering food security, environmental stewardship, and community prosperity.",
+                    "create_acronym": {
+                        "C": "Connecting farmers and consumers directly",
+                        "R": "Reducing food waste and supply chain inefficiencies",
+                        "E": "Empowering sustainable agricultural practices",
+                        "A": "Affording transparent, fair pricing for all",
+                        "T": "Trusting through quality assurance and community feedback",
+                        "E": "Enabling local food system resilience"
+                    }
+                },
+                "success_metrics": {
+                    "business_metrics": {
+                        "revenue_goals": { "year_1": "$3M ARR", "year_3": "$10M" },
+                        "user_acquisition": { "farmers": "1,500 active farmers", "consumers": "15,000 active consumers" },
+                        "transaction_volume": "$8M GMV annually",
+                        "market_penetration": "20% of target region"
+                    },
+                    "product_metrics": {
+                        "user_engagement": "75%",
+                        "order_fulfillment": "97%",
+                        "quality_assurance": "4.3+",
+                        "platform_efficiency": "<2%",
+                        "customer_retention": "60%"
+                    },
+                    "impact_metrics": {
+                        "farmer_income": "40% increase",
+                        "consumer_satisfaction": "88%",
+                        "food_waste": "35% reduction",
+                        "local_economy": "$15M+ impact",
+                        "environmental_impact": "25% carbon reduction"
+                    }
+                },
+                "epics": [
+                    {
+                        "title": "Farmer Empowerment & Profile Creation",
+                        "description": "Create compelling farm profiles that showcase produce and farming practices",
+                        "user_stories": [
+                            "Register with comprehensive farm details",
+                            "Upload photos and videos of farm operations",
+                            "Highlight certifications and credentials",
+                            "Share farming philosophy and family story",
+                            "Set delivery methods and coverage areas"
+                        ]
+                    },
+                    {
+                        "title": "Smart Product Management & Pricing",
+                        "description": "Intelligent tools for product listings and pricing optimization",
+                        "user_stories": [
+                            "AI-powered pricing suggestions",
+                            "Pre-order campaigns for seasonal produce",
+                            "Automated inventory tracking",
+                            "Bundle complementary products",
+                            "Dynamic pricing based on freshness"
+                        ]
+                    },
+                    {
+                        "title": "Consumer Discovery & Personalized Shopping",
+                        "description": "Personalized shopping experience for conscious consumers",
+                        "user_stories": [
+                            "Personalized recommendations",
+                            "Follow favorite farmers",
+                            "Advanced search and filtering",
+                            "Shopping lists and recurring orders",
+                            "Complete produce traceability"
+                        ]
+                    },
+                    {
+                        "title": "Transparent Order Management",
+                        "description": "Complete transparency in order process with real-time tracking",
+                        "user_stories": [
+                            "Real-time tracking with photo updates",
+                            "Streamlined order management workflows",
+                            "Proactive communication system",
+                            "Flexible delivery options",
+                            "Batch processing tools"
+                        ]
+                    }
+                ],
+                "technical_architecture": {
+                    "microservices": [
+                        { "name": "User Management Service", "description": "Identity, authentication, profiles, roles" },
+                        { "name": "Smart Catalog Service", "description": "AI-powered product management, pricing, inventory" },
+                        { "name": "Order Orchestration Service", "description": "Complex order workflows, tracking, fulfillment" },
+                        { "name": "Financial Services", "description": "Payments, settlements, microfinance, analytics" },
+                        { "name": "Intelligent Logistics Service", "description": "Route optimization, cold chain, delivery management" }
+                    ],
+                    "technology_stack": {
+                        "Frontend": ["React Native (mobile)", "Next.js (web)", "Progressive Web App"],
+                        "Backend": ["Node.js microservices", "Python ML services", "Go for high-performance"],
+                        "Databases": ["PostgreSQL (primary)", "MongoDB (content)", "Redis (caching)", "InfluxDB (IoT)"],
+                        "Cloud": ["Multi-cloud (AWS primary)", "Google Cloud for ML"],
+                        "Monitoring": ["Prometheus + Grafana", "ELK stack", "Jaeger tracing"]
+                    }
+                },
+                "development_phases": [
+                    {
+                        "title": "Foundation & MVP",
+                        "duration": "Months 1-6",
+                        "features": ["Basic onboarding", "Simple product listing", "Core ordering", "Payment processing", "Admin dashboard"],
+                        "success_criteria": ["200 farmers", "2,000 consumers", "5,000 orders", "92% fulfillment", "$250K GMV"]
+                    },
+                    {
+                        "title": "Intelligence & Scale",
+                        "duration": "Months 7-12",
+                        "features": ["AI pricing", "Advanced search", "Mobile app", "Multi-delivery", "Community features"],
+                        "success_criteria": ["1,000 farmers", "8,000 consumers", "$1M GMV", "4.2+ rating", "65% MAU"]
+                    },
+                    {
+                        "title": "Innovation & Expansion",
+                        "duration": "Months 13-18",
+                        "features": ["IoT integration", "Blockchain features", "Microfinance", "Cold chain", "Subscriptions"],
+                        "success_criteria": ["1,500+ farmers", "15,000+ consumers", "$2M GMV", "Break-even", "40% income boost"]
+                    }
+                ],
+                "risks": [
+                    {
+                        "category": "Technical Risks",
+                        "items": [
+                            { "risk": "Scalability during harvest seasons", "mitigation": "Auto-scaling infrastructure, load testing" },
+                            { "risk": "IoT device reliability in rural areas", "mitigation": "Edge computing, offline-first design" },
+                            { "risk": "AI model accuracy", "mitigation": "Continuous learning, A/B testing" }
+                        ]
+                    },
+                    {
+                        "category": "Business Risks",
+                        "items": [
+                            { "risk": "Farmer digital adoption barriers", "mitigation": "Local language support, field representatives" },
+                            { "risk": "Seasonal cash flow challenges", "mitigation": "Diversified revenue streams, financial reserves" },
+                            { "risk": "Regulatory changes", "mitigation": "Legal monitoring, compliance automation" }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // Application State
+        let currentSection = 'overview';
+        let searchTerm = '';
+
+        // Initialize the application
+        function initializeApp() {
+            renderHeader();
+            renderNavigation();
+            renderContent();
+            setupEventListeners();
+        }
+
+        // Render header
+        function renderHeader() {
+            document.getElementById('product-name').textContent = prdData.product_requirements_document.metadata.product_name;
+            document.getElementById('product-subtitle').textContent = 'Product Requirements Document - Revolutionizing Agriculture Through Technology';
+        }
+
+        // Render navigation
+        function renderNavigation() {
+            const navItems = [
+                { id: 'overview', label: 'Overview', icon: '🏠' },
+                { id: 'problem', label: 'Problem & Vision', icon: '🎯' },
+                { id: 'metrics', label: 'Success Metrics', icon: '📊' },
+                { id: 'epics', label: 'User Stories', icon: '📖' },
+                { id: 'architecture', label: 'Architecture', icon: '🏗️' },
+                { id: 'roadmap', label: 'Roadmap', icon: '🗺️' },
+                { id: 'risks', label: 'Risk Assessment', icon: '⚠️' }
+            ];
+
+            const navContainer = document.getElementById('navigation');
+            navContainer.innerHTML = navItems.map(item => 
+                `<div class="nav-item ${item.id === currentSection ? 'active' : ''}" 
+                     onclick="navigateToSection('${item.id}')">
+                    ${item.icon} ${item.label}
+                </div>`
+            ).join('');
+        }
+
+        // Navigate to section
+        function navigateToSection(sectionId) {
+            currentSection = sectionId;
+            renderNavigation();
+            renderContent();
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Render content based on current section
+        function renderContent() {
+            const contentContainer = document.getElementById('content-sections');
+            
+            switch(currentSection) {
+                case 'overview':
+                    contentContainer.innerHTML = renderOverview();
+                    break;
+                case 'problem':
+                    contentContainer.innerHTML = renderProblemVision();
+                    break;
+                case 'metrics':
+                    contentContainer.innerHTML = renderMetrics();
+                    break;
+                case 'epics':
+                    contentContainer.innerHTML = renderEpics();
+                    break;
+                case 'architecture':
+                    contentContainer.innerHTML = renderArchitecture();
+                    break;
+                case 'roadmap':
+                    contentContainer.innerHTML = renderRoadmap();
+                    break;
+                case 'risks':
+                    contentContainer.innerHTML = renderRisks();
+                    break;
+                default:
+                    contentContainer.innerHTML = renderOverview();
+            }
+        }
+
+        // Render overview section
+        function renderOverview() {
+            const data = prdData.product_requirements_document;
+            return `
+                <div class="section active">
+                    <h2 class="section-title">Executive Summary</h2>
+                    <div class="card">
+                        <div class="card-title">
+                            <div class="card-icon">📋</div>
+                            Product Overview
+                        </div>
+                        <p>${data.executive_summary.description}</p>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title">
+                            <div class="card-icon">📄</div>
+                            Document Information
+                        </div>
+                        <div class="grid">
+                            <div class="metric-card">
+                                <div class="metric-value">v${data.metadata.version}</div>
+                                <div class="metric-label">Version</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">${data.metadata.date}</div>
+                                <div class="metric-label">Last Updated</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">${data.metadata.status}</div>
+                                <div class="metric-label">Status</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-value">${data.metadata.document_owner}</div>
+                                <div class="metric-label">Owner</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render problem and vision section
+        function renderProblemVision() {
+            const data = prdData.product_requirements_document;
+            return `
+                <div class="section active">
+                    <h2 class="section-title">Problem Statement & Vision</h2>
+                    
+                    <div class="card">
+                        <div class="card-title">
+                            <div class="card-icon">❗</div>
+                            Problem Overview
+                        </div>
+                        <p>${data.problem_statement.overview}</p>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Key Pain Points</h3>
+                    <div class="grid">
+                        <div class="card">
+                            <div class="card-title">
+                                <div class="card-icon">🌾</div>
+                                Farmer Challenges
+                            </div>
+                            ${data.problem_statement.key_pain_points.farmers.map(point => 
+                                `<div class="list-item">${point}</div>`
+                            ).join('')}
+                        </div>
+                        <div class="card">
+                            <div class="card-title">
+                                <div class="card-icon">🛒</div>
+                                Consumer Challenges
+                            </div>
+                            ${data.problem_statement.key_pain_points.consumers.map(point => 
+                                `<div class="list-item">${point}</div>`
+                            ).join('')}
+                        </div>
+                        <div class="card">
+                            <div class="card-title">
+                                <div class="card-icon">🏪</div>
+                                Market Issues
+                            </div>
+                            ${data.problem_statement.key_pain_points.market.map(point => 
+                                `<div class="list-item">${point}</div>`
+                            ).join('')}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-title">
+                            <div class="card-icon">🎯</div>
+                            Product Vision
+                        </div>
+                        <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1.5rem;">"${data.product_vision.statement}"</p>
+                        
+                        <h4 style="margin-bottom: 1rem;">CREATE Acronym:</h4>
+                        ${Object.entries(data.product_vision.create_acronym).map(([letter, meaning]) => 
+                            `<div class="list-item"><strong>${letter}:</strong> ${meaning}</div>`
+                        ).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render metrics section
+        function renderMetrics() {
+            const data = prdData.product_requirements_document.success_metrics;
+            return `
+                <div class="section active">
+                    <h2 class="section-title">Success Metrics</h2>
+                    
+                    <h3 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Business Metrics</h3>
+                    <div class="grid">
+                        <div class="metric-card">
+                            <div class="metric-value">${data.business_metrics.revenue_goals.year_1}</div>
+                            <div class="metric-label">Year 1 Revenue Goal</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${data.business_metrics.revenue_goals.year_3}</div>
+                            <div class="metric-label">Year 3 Revenue Goal</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${data.business_metrics.user_acquisition.farmers}</div>
+                            <div class="metric-label">Target Farmers</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${data.business_metrics.user_acquisition.consumers}</div>
+                            <div class="metric-label">Target Consumers</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${data.business_metrics.transaction_volume}</div>
+                            <div class="metric-label">GMV Target</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">${data.business_metrics.market_penetration}</div>
+                            <div class="metric-label">Market Penetration</div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Product Metrics</h3>
+                    <div class="grid">
+                        ${Object.entries(data.product_metrics).map(([key, value]) => `
+                            <div class="metric-card" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                                <div class="metric-value">${value}</div>
+                                <div class="metric-label">${key.replace(/_/g, ' ').toUpperCase()}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1rem 0; color: #2c3e50;">Impact Metrics</h3>
+                    <div class="grid">
+                        ${Object.entries(data.impact_metrics).map(([key, value]) => `
+                            <div class="metric-card" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                                <div class="metric-value">${value}</div>
+                                <div class="metric-label">${key.replace(/_/g, ' ').toUpperCase()}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render epics section
+        function renderEpics() {
+            const epics = prdData.product_requirements_document.epics;
+            return `
+                <div class="section active">
+                    <h2 class="section-title">User Stories & Epics</h2>
+                    

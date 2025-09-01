@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenCREATE - Connecting Farmers & Consumers</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #2d5a27;
+            --light-green: #4a7c59;
+            --accent-orange: #ff7b00;
+            --cream: #f7f3e9;
+            --dark-brown: #3e2723;
+            --light-gray: #f5f5f5;
+            --white: #ffffff;
+            --text-dark: #333333;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--cream);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--accent-orange);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Page Sections */
+        .page {
+            display: none;
+            min-height: calc(100vh - 80px);
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(45, 90, 39, 0.8), rgba(74, 124, 89, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23a8d5ba" width="1200" height="600"/><path fill="%234a7c59" d="M0 400c100-50 300-100 600-50s500 100 600 50v200H0z"/></svg>');
+            background-size: cover;
+            color: var(--white);
+            text-align: center;
+            padding: 6rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            margin-bottom: 2rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+        }
+
+        /* Forms */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, var(--light-green), var(--primary-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 3rem;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-green);
+            margin: 0.5rem 0;
+        }
+
+        /* User Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-green);
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+            display: none;
+        }
+
+        .user-menu.active {
+            display: block;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 1rem;
+            min-width: 200px;
+            display: none;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu a:hover {
+            color: var(--primary-green);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <a href="#" class="logo" onclick="showPage('home')">GreenCREATE</a>
+            
+            <ul class="nav-links">
+                <li><a href="#" onclick="showPage('home')">Home</a></li>
+                <li><a href="#" onclick="showPage('products')">Products</a></li>
+                <li><a href="#" onclick="showPage('farmers')">For Farmers</a></li>
+                <li><a href="#" onclick="showPage('about')">About</a></li>
+                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+            </ul>
+
+            <div class="auth-buttons" id="authButtons">
+                <a href="#" class="btn btn-secondary" onclick="showPage('login')">Login</a>
+                <a href="#" class="btn btn-primary" onclick="showPage('register')">Sign Up</a>
+            </div>
+
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" onclick="toggleUserDropdown()" id="userAvatar">
+                    U
+                </div>
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="#" onclick="showPage('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    <a href="#" onclick="showPage('profile')"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#" onclick="showPage('orders')"><i class="fas fa-shopping-bag"></i> Orders</a>
+                    <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <section class="hero">
+            <div class="container">
+                <h1>Fresh From Farm To Your Table</h1>
+                <p>Connecting small-scale farmers directly with conscious consumers for fresher produce, fair prices, and sustainable communities.</p>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-primary" onclick="showPage('register')">Get Started</a>
+                    <a href="#" class="btn btn-secondary" onclick="showPage('products')">Browse Products</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="features-grid">
+                <div class="feature-card card">
+                    <div class="feature-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3>Fresh & Local</h3>
+                    <p>Get the freshest produce directly from local farms within 100km of your location, harvested at peak quality.</p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Fair Trade</h3>
+                    <p>Support small-scale farmers with fair pricing that ensures sustainable livelihoods and community prosperity.</p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Sustainable</h3>
+                    <p>Reduce food waste and carbon footprint with our transparent, efficient farm-to-table supply chain.</p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Easy Ordering</h3>
+                    <p>Simple, intuitive platform for discovering, ordering, and tracking your fresh produce delivery.</p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Fast Delivery</h3>
+                    <p>Cold chain management ensures your produce arrives fresh with real-time tracking and photo updates.</p>
+                </div>
+
+                <div class="feature-card card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Community Impact</h3>
+                    <p>Every purchase creates positive impact for farmers, environment, and local food system resilience.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Products Page -->
+    <div id="productsPage" class="page">
+        <div class="container">
+            <h1 style="text-align: center; margin-bottom: 2rem; color: var(--primary-green);">Fresh Produce</h1>
+            
+            <div class="card" style="margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                    <div>
+                        <input type="text" placeholder="Search products..." style="padding: 10px; border: 2px solid #ddd; border-radius: 8px; width: 250px;">
+                    </div>
+                    <div>
+                        <select style="padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                            <option value="">All Categories</option>
+                            <option value="vegetables">Vegetables</option>
+                            <option value="fruits">Fruits</option>
+                            <option value="herbs">Herbs</option>
+                            <option value="grains">Grains</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select style="padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                            <option value="">Sort By</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Highest Rated</option>
+                            <option value="distance">Nearest Farm</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Farmers Page -->
+    <div id="farmersPage" class="page">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h1 style="color: var(--primary-green); margin-bottom: 1rem;">Empower Your Farm</h1>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Join thousands of farmers who have increased their income by 40% through direct-to-consumer sales.</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="card">
+                    <div class="feature-icon" style="color: var(--primary-green);">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Increase Revenue</h3>
+                    <p>Eliminate middlemen and sell directly to consumers at fair prices. Our AI-powered pricing helps optimize your earnings.</p>
+                </div>
+
+                <div class="card">
+                    <div class="feature-icon" style="color: var(--primary-green);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Build Community</h3>
+                    <p>Connect with conscious consumers who value your story, farming practices, and commitment to quality.</p>
+                </div>
+
+                <div class="card">
+                    <div class="feature-icon" style="color: var(--primary-green);">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Learn & Grow</h3>
+                    <p>Access training resources, best practices, and connect with agricultural extension officers for continuous improvement.</p>
+                </div>
+            </div>
+
+            <div class="card" style="text-align: center; margin: 3rem 0;">
+                <h2 style="color: var(--primary-green); margin-bottom: 1rem;">Ready to Transform Your Farm?</h2>
+                <p style="margin-bottom: 2rem;">Join our platform and start selling directly to customers who care about fresh, local produce.</p>
+                <a href="#" class="btn btn-primary" onclick="showFarmerRegistration()" style="font-size: 1.1rem; padding: 15px 30px;">Become a Farmer Partner</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="aboutPage" class="page">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h1 style="color: var(--primary-green); margin-bottom: 1rem;">About GreenCREATE</h1>
+                <p style="font-size: 1.2rem;">Creating sustainable connections between farmers and consumers</p>
+            </div>
+
+            <div class="card">
+                <h2 style="color: var(--primary-green); margin-bottom: 1rem;">Our Mission</h2>
+                <p style="margin-bottom: 1.5rem;">To CREATE a sustainable future where small farmers thrive through direct connections with conscious consumers, fostering food security, environmental stewardship, and community prosperity.</p>
+                
+                <h3 style="color: var(--light-green); margin: 2rem 0 1rem;">CREATE Stands For:</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin: 0.5rem 0; padding-left: 2rem; position: relative;">
+                        <i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0; top: 3px;"></i>
+                        <strong>Connecting</strong> farmers and consumers directly
+                    </li>
+                    <li style="margin: 0.5rem 0; padding-left: 2rem; position: relative;">
+                        <i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0; top: 3px;"></i>
+                        <strong>Reducing</strong> food waste and supply chain inefficiencies
+                    </li>
+                    <li style="margin: 0.5rem 0; padding-left: 2rem; position: relative;">
+                        <i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0; top: 3px;"></i>
+                        <strong>Empowering</strong> sustainable agricultural practices
+                    </li>
+                    <li style="margin: 0.5rem 0; padding-left: 2rem; position: relative;">
+                        <i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0; top: 3px;"></i>
+                        <strong>Affording</strong> transparent, fair pricing for all
+                    </li>
+                    <li style="margin: 0.5rem 0; padding-left: 2rem; position: relative;">
+                        <i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0; top: 3px;"></i>
+                        <strong>Trusting</strong> through quality assurance and community feedback
+                    </li>
+                    <li style="margin: 0.5rem 0; padding-left: 2rem; position: relative;">
+                        <i class="fas fa-check-circle" style="color: var(--success); position: absolute; left: 0; top: 3px;"></i>
+                        <strong>Enabling</strong> local food system resilience
+                    </li>
+                </ul>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                <div class="card">
+                    <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Our Impact</h3>
+                    <div class="stat-card" style="background: linear-gradient(135deg, var(--success), #20c997); margin-bottom: 1rem;">
+                        <span class="stat-number">40%</span>
+                        <span>Farmer Income Increase</span>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, var(--accent-orange), #fd7e14); margin-bottom: 1rem;">
+                        <span class="stat-number">35%</span>
+                        <span>Food Waste Reduction</span>
+                    </div>
+                    <div class="stat-card" style="background: linear-gradient(135deg, var(--primary-green), var(--light-green));">
+                        <span class="stat-number">25%</span>
+                        <span>Carbon Footprint Reduction</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Our Vision</h3>
+                    <p>We envision a world where technology bridges the gap between rural farmers and urban consumers, creating sustainable food systems that benefit everyone while protecting our planet for future generations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contactPage" class="page">
+        <div class="container">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h1 style="color: var(--primary-green); margin-bottom: 1rem;">Contact Us</h1>
+                <p style="font-size: 1.2rem;">We'd love to hear from you</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem;">
+                <div class="form-container">
+                    <h2 style="color: var(--primary-green); margin-bottom: 2rem;">Send us a message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Name</label>
+                            <input type="text" id="contactName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Email</label>
+                            <input type="email" id="contactEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactSubject">Subject</label>
+                            <select id="contactSubject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="farmer">Farmer Support</option>
+                                <option value="consumer">Consumer Support</option>
+                                <option value="technical">Technical Issue</option>
+                                <option value="partnership">Partnership</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Message</label>
+                            <textarea id="contactMessage" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+
+                <div>
+                    <div class="card" style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Get in Touch</h3>
+                        <div style="margin: 1rem 0;">
+                            <i class="fas fa-envelope" style="color: var(--accent-orange); margin-right: 10px;"></i>
+                            <strong>Email:</strong> support@greencreate.com
+                        </div>
+                        <div style="margin: 1rem 0;">
+                            <i class="fas fa-phone" style="color: var(--accent-orange); margin-right: 10px;"></i>
+                            <strong>Phone:</strong> +1 (555) 123-4567
+                        </div>
+                        <div style="margin: 1rem 0;">
+                            <i class="fas fa-map-marker-alt" style="color: var(--accent-orange); margin-right: 10px;"></i>
+                            <strong>Address:</strong> 123 Farm Valley Road, Green City, GC 12345
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Support Hours</h3>
+                        <div style="margin: 1rem 0;">
+                            <strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM
+                        </div>
+                        <div style="margin: 1rem 0;">
+                            <strong>Saturday:</strong> 9:00 AM - 4:00 PM
+                        </div>
+                        <div style="margin: 1rem 0;">
+                            <strong>Sunday:</strong> Closed
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page">
+        <div class="container">
+            <div class="form-container">
+                <h2 style="text-align: center; color: var(--primary-green); margin-bottom: 2rem;">Login to GreenCREATE</h2>
+                <div id="loginAlert"></div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                            <input type="checkbox" id="rememberMe">
+                            Remember me
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" id="loginBtn">
+                        Login
+                    </button>
+                </form>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p>Don't have an account? <a href="#" onclick="showPage('register')" style="color: var(--primary-green); text-decoration: none; font-weight: bold;">Sign up here</a></p>
+                    <p><a href="#" style="color: var(--text-dark); text-decoration: none;">Forgot your password?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="registerPage" class="page">
+        <div class="container">
+            <div class="form-container" style="max-width: 600px;">
+                <h2 style="text-align: center; color: var(--primary-green); margin-bottom: 2rem;">Join GreenCREATE</h2>
+                <div id="registerAlert"></div>
+                
+                <!-- User Type Selection -->
+                <div class="form-group">
+                    <label>I am a:</label>
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer;">
+                            <input type="radio" name="userType" value="consumer" checked onchange="toggleRegistrationForm()">
+                            Consumer
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal; cursor: pointer;">
+                            <input type="radio" name="userType" value="farmer" onchange="toggleRegistrationForm()">
+                            Farmer
+                        </label>
+                    </div>
+                </div>
+
+                <form id="registerForm">
+                    <!-- Common Fields -->
+                    <div class="form-group">
+                        <label for="registerName">Full Name</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPhone">Phone Number</label>
+                        <input type="tel" id="registerPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+
+                    <!-- Consumer Specific Fields -->
+                    <div id="consumerFields">
+                        <div class="form-group">
+                            <label for="consumerAddress">Delivery Address</label>
+                            <textarea id="consumerAddress" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="consumerPreferences">Dietary Preferences (Optional)</label>
+                            <select id="consumerPreferences">
+                                <option value="">No specific preference</option>
+                                <option value="organic">Organic only</option>
+                                <option value="vegetarian">Vegetarian friendly</option>
+                                <option value="vegan">Vegan friendly</option>
+                                <option value="local">Local produce priority</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Farmer Specific Fields -->
+                    <div id="farmerFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="farmName">Farm Name</label>
+                            <input type="text" id="farmName">
+                        </div>
+                        <div class="form-group">
+                            <label for="farmAddress">Farm Address</label>
+                            <textarea id="farmAddress" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="farmSize">Farm Size (acres)</label>
+                            <input type="number" id="farmSize" min="0.1" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="farmingType">Farming Type</label>
+                            <select id="farmingType">
+                                <option value="conventional">Conventional</option>
+                                <option value="organic">Organic</option>
+                                <option value="sustainable">Sustainable</option>
+                                <option value="permaculture">Permaculture</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="primaryCrops">Primary Crops (comma separated)</label>
+                            <input type="text" id="primaryCrops" placeholder="e.g., tomatoes, lettuce, carrots">
+                        </div>
+                        <div class="form-group">
+                            <label for="farmExperience">Years of Farming Experience</label>
+                            <input type="number" id="farmExperience" min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                            <input type="checkbox" id="agreeTerms" required>
+                            I agree to the <a href="#" style="color: var(--primary-green);">Terms of Service</a> and <a href="#" style="color: var(--primary-green);">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;" id="registerBtn">
+                        Create Account
+                    </button>
+                </form>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <p>Already have an account? <a href="#" onclick="showPage('login')" style="color: var(--primary-green); text-decoration: none; font-weight: bold;">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboardPage" class="page">
+        <div class="container">
+            <h1 style="color: var(--primary-green); margin-bottom: 2rem;">Dashboard</h1>
+            
+            <div id="consumerDashboard">
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">12</span>
+                        <span>Total Orders</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">$485</span>
+                        <span>Total Spent</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">8</span>
+                        <span>Favorite Farmers</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">4.8</span>
+                        <span>Avg. Rating Given</span>
+                    </div>
+                </div>
+
+                <div class="card" style="margin: 2rem 0;">
+                    <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Recent Orders</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #eee;">
+                                    <th style="padding: 1rem; text-align: left;">Order ID</th>
+                                    <th style="padding: 1rem; text-align: left;">Farmer</th>
+                                    <th style="padding: 1rem; text-align: left;">Items</th>
+                                    <th style="padding: 1rem; text-align: left;">Status</th>
+                                    <th style="padding: 1rem; text-align: left;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentOrdersTable">
+                                <!-- Orders will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="farmerDashboard" style="display: none;">
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">45</span>
+                        <span>Products Listed</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">$2,340</span>
+                        <span>Monthly Revenue</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">128</span>
+                        <span>Orders Fulfilled</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">4.7</span>
+                        <span>Average Rating</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div class="card">
+                        <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Recent Orders</h3>
+                        <div id="farmerRecentOrders">
+                            <!-- Farmer orders will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Quick Actions</h3>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <button class="btn btn-primary" onclick="showPage('add-product')">Add New Product</button>
+                            <button class="btn btn-secondary" onclick="showPage('manage-inventory')">Manage Inventory</button>
+                            <button class="btn btn-secondary" onclick="showPage('view-analytics')">View Analytics</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page -->
+    <div id="profilePage" class="page">
+        <div class="container">
+            <h1 style="color: var(--primary-green); margin-bottom: 2rem;">My Profile</h1>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem;">
+                <div class="card">
+                    <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Personal Information</h3>
+                    <form id="profileForm">
+                        <div class="form-group">
+                            <label for="profileName">Full Name</label>
+                            <input type="text" id="profileName">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileEmail">Email</label>
+                            <input type="email" id="profileEmail">
+                        </div>
+                        <div class="form-group">
+                            <label for="profilePhone">Phone</label>
+                            <input type="tel" id="profilePhone">
+                        </div>
+                        <div class="form-group">
+                            <label for="profileAddress">Address</label>
+                            <textarea id="profileAddress" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3 style="color: var(--primary-green); margin-bottom: 1rem;">Account Settings</h3>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password</label>
+                            <input type="password" id="confirmNewPassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Change Password</button>
+                    </form>
+
+                    <hr style="margin: 2rem 0; border: 1px solid #eee;">
+
+                    <div>
+                        <h4 style="color: var(--primary-green); margin-bottom: 1rem;">Notification Preferences</h4>
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                                <input type="checkbox" checked>
+                                Email notifications for orders
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                                <input type="checkbox" checked>
+                                SMS notifications for delivery updates
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                                <input type="checkbox">
+                                Weekly newsletter
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                                <input type="checkbox">
+                                Promotional offers
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Page -->
+    <div id="ordersPage" class="page">
+        <div class="container">
+            <h1 style="color: var(--primary-green); margin-bottom: 2rem;">My Orders</h1>
+            
+            <div class="card" style="margin-bottom: 2rem;">
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    <select style="padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                        <option value="">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                    <input type="date" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                    <input type="date" style="padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                </div>
+            </div>
+
+            <div id="ordersContainer">
+                <!-- Orders will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">GreenCREATE</h3>
+                    <p>Connecting farmers and consumers for a sustainable future.</p>
+                    <div style="margin-top: 1rem;">
+                        <a href="#" style="color: var(--white); margin-right: 1rem; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: var(--white); margin-right: 1rem; font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: var(--white); margin-right: 1rem; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: var(--white); font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem;">Quick Links</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="#" onclick="showPage('about')" style="color: var(--white); text-decoration: none;">About Us</a>
+                        <a href="#" onclick="showPage('farmers')" style="color: var(--white); text-decoration: none;">For Farmers</a>
+                        <a href="#" onclick="showPage('products')" style="color: var(--white); text-decoration: none;">Products</a>
+                        <a href="#" onclick="showPage('contact')" style="color: var(--white); text-decoration: none;">Contact</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem;">Support</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <a href="#" style="color: var(--white); text-decoration: none;">Help Center</a>
+                        <a href="#" style="color: var(--white); text-decoration: none;">Terms of Service</a>
+                        <a href="#" style="color: var(--white); text-decoration: none;">Privacy Policy</a>
+                        <a href="#" style="color: var(--white); text-decoration: none;">FAQ</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="margin-bottom: 1rem;">Newsletter</h4>
+                    <p style="margin-bottom: 1rem;">Stay updated with fresh produce and farm stories</p>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <input type="email" placeholder="Your email" style="flex: 1; padding: 10px; border: none; border-radius: 5px;">
+                        <button class="btn btn-primary">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 2rem 0;">
+            <div style="text-align: center;">
+                <p>&copy; 2025 GreenCREATE. All rights reserved. Made with <i class="fas fa-heart" style="color: var(--accent-orange);"></i> for sustainable agriculture.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Application State
+        const AppState = {
+            currentUser: null,
+            currentPage: 'home',
+            products: [],
+            orders: [],
+            farmers: []
+        };
+
+        // Mock Database - In a real app, this would be a proper backend
+        const MockDB = {
+            users: [
+                {
+                    id: 1,
+                    email: 'demo@consumer.com',
+                    password: 'password123',
+                    name: 'John Doe',
+                    type: 'consumer',
+                    phone: '+1234567890',
+                    address: '123 Main St, City, State',
+                    preferences: 'organic',
+                    createdAt: new Date('2024-01-15')
+                },
+                {
+                    id: 2,
+                    email: 'demo@farmer.com',
+                    password: 'password123',
+                    name: 'Jane Smith',
+                    type: 'farmer',
+                    phone: '+1987654321',
+                    farmName: 'Green Valley Farm',
+                    farmAddress: '456 Farm Road, Rural Area, State',
+                    farmSize: 25,
+                    farmingType: 'organic',
+                    primaryCrops: 'tomatoes, lettuce, carrots',
+                    farmExperience: 10,
+                    createdAt: new Date('2024-01-10')
+                }
+            ],
+            products: [
+                {
+                    id: 1,
+                    farmerId: 2,
+                    farmerName: 'Green Valley Farm',
+                    name: 'Organic Tomatoes',
+                    category: 'vegetables',
+                    price: 4.99,
+                    unit: 'lb',
+                    description: 'Fresh, juicy organic tomatoes grown with care',
+                    image: '🍅',
+                    inStock: true,
+                    quantity: 50,
+                    rating: 4.8,
+                    reviews: 24,
+                    harvestDate: '2024-08-25',
+                    certifications: ['organic', 'non-gmo']
+                },
+                {
+                    id: 2,
+                    farmerId: 2,
+                    farmerName: 'Green Valley Farm',
+                    name: 'Fresh Lettuce',
+                    category: 'vegetables',
+                    price: 2.99,
+                    unit: 'head',
+                    description: 'Crisp, fresh lettuce perfect for salads',
+                    image: '🥬',
+                    inStock: true,
+                    quantity: 30,
+                    rating: 4.6,
+                    reviews: 18,
+                    harvestDate: '2024-08-26',
+                    certifications: ['organic']
+                },
+                {
+                    id: 3,
+                    farmerId: 2,
+                    farmerName: 'Green Valley Farm',
+                    name: 'Baby Carrots',
+                    category: 'vegetables',
+                    price: 3.49,
+                    unit: 'lb',
+                    description: 'Sweet, tender baby carrots',
+                    image: '🥕',
+                    inStock: true,
+                    quantity: 40,
+                    rating: 4.7,
+                    reviews: 32,
+                    harvestDate: '2024-08-24',
+                    certifications: ['organic', 'sustainable']
+                },
+                {
+                    id: 4,
+                    farmerId: 2,
+                    farmerName: 'Sunny Acres',
+                    name: 'Fresh Strawberries',
+                    category: 'fruits',
+                    price: 6.99,
+                    unit: 'pint',
+                    description: 'Sweet, ripe strawberries picked this morning',
+                    image: '🍓',
+                    inStock: true,
+                    quantity: 25,
+                    rating: 4.9,
+                    reviews: 41,
+                    harvestDate: '2024-08-26',
+                    certifications: ['organic']
+                },
+                {
+                    id: 5,
+                    farmerId: 2,
+                    farmerName: 'Herb Haven',
+                    name: 'Fresh Basil',
+                    category: 'herbs',
+                    price: 2.49,
+                    unit: 'bunch',
+                    description: 'Aromatic fresh basil for your cooking needs',
+                    image: '🌿',
+                    inStock: true,
+                    quantity: 20,
+                    rating: 4.8,
+                    reviews: 15,
+                    harvestDate: '2024-08-26',
+                    certifications: ['organic']
+                },
+                {
+                    id: 6,
+                    farmerId: 2,
+                    farmerName: 'Golden Fields',
+                    name: 'Sweet Corn',
+                    category: 'vegetables',
+                    price: 1.99,
+                    unit: 'ear',
+                    description: 'Fresh sweet corn, perfect for grilling',
+                    image: '🌽',
+                    inStock: true,
+                    quantity: 60,
+                    rating: 4.7,
+                    reviews: 28,
+                    harvestDate: '2024-08-25',
+                    certifications: ['non-gmo']
+                }
+            ],
+            orders: [
+                {
+                    id: 'ORD-001',
+                    customerId: 1,
+                    farmerId: 2,
+                    farmerName: 'Green Valley Farm',
+                    items: [
+                        { productId: 1, name: 'Organic Tomatoes', quantity: 2, price: 4.99 },
+                        { productId: 2, name: 'Fresh Lettuce', quantity: 1, price: 2.99 }
+                    ],
+                    total: 12.97,
+                    status: 'delivered',
+                    orderDate: '2024-08-20',
+                    deliveryDate: '2024-08-22',
+                    rating: 5
+                },
+                {
+                    id: 'ORD-002',
+                    customerId: 1,
+                    farmerId: 2,
+                    farmerName: 'Green Valley Farm',
+                    items: [
+                        { productId: 4, name: 'Fresh Strawberries', quantity: 2, price: 6.99 }
+                    ],
+                    total: 13.98,
+                    status: 'shipped',
+                    orderDate: '2024-08-24',
+                    deliveryDate: '2024-08-26',
+                    trackingId: 'TRK-12345'
+                }
+            ]
+        };
+
+        // Utility Functions
+        function showAlert(message, type = 'success', containerId = 'body') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = message;
+            
+            const container = containerId === 'body' ? document.body : document.getElementById(containerId);
+            
+            if (container) {
+                if (containerId !== 'body') {
+                    container.innerHTML = '';
+                }
+                container.appendChild(alertDiv);
+                
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 5000);
+            }
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateForm(formId) {
+            const form = document.getElementById(formId);
+            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = 'var(--error)';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#ddd';
+                }
+            });
+
+            return isValid;
+        }
+
+        // Navigation Functions
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show selected page
+            const targetPage = document.getElementById(pageId + 'Page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+                AppState.currentPage = pageId;
+                
+                // Load page-specific data
+                if (pageId === 'products') {
+                    loadProducts();
+                } else if (pageId === 'dashboard') {
+                    loadDashboard();
+                } else if (pageId === 'orders') {
+                    loadOrders();
+                } else if (pageId === 'profile') {
+                    loadProfile();
+                }
+            }
+        }
+
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        function toggleRegistrationForm() {
+            const userType = document.querySelector('input[name="userType"]:checked').value;
+            const consumerFields = document.getElementById('consumerFields');
+            const farmerFields = document.getElementById('farmerFields');
+
+            if (userType === 'farmer') {
+                consumerFields.style.display = 'none';
+                farmerFields.style.display = 'block';
+                
+                // Make farmer fields required
+                farmerFields.querySelectorAll('input, select, textarea').forEach(field => {
+                    if (['farmName', 'farmAddress', 'farmSize', 'farmingType'].includes(field.id)) {
+                        field.required = true;
+                    }
+                });
+                
+                // Remove required from consumer fields
+                consumerFields.querySelectorAll('input, select, textarea').forEach(field => {
+                    field.required = false;
+                });
+            } else {
+                consumerFields.style.display = 'block';
+                farmerFields.style.display = 'none';
+                
+                // Make consumer fields required
+                consumerFields.querySelectorAll('input, select, textarea').forEach(field => {
+                    if (field.id === 'consumerAddress') {
+                        field.required = true;
+                    }
+                });
+                
+                // Remove required from farmer fields
+                farmerFields.querySelectorAll('input, select, textarea').forEach(field => {
+                    field.required = false;
+                });
+            }
+        }
+
+        function showFarmerRegistration() {
+            document.querySelector('input[name="userType"][value="farmer"]').checked = true;
+            toggleRegistrationForm();
+            showPage('register');
+        }
+
+        // Authentication Functions
+        function login(email, password) {
+            const user = MockDB.users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                AppState.currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateAuthUI();
+                showPage('dashboard');
+                showAlert(`Welcome back, ${user.name}!`);
+                return true;
+            } else {
+                showAlert('Invalid email or password', 'error', 'loginAlert');
+                return false;
+            }
+        }
+
+        function register(userData) {
+            // Check if email already exists
+            const existingUser = MockDB.users.find(u => u.email === userData.email);
+            if (existingUser) {
+                showAlert('Email already registered', 'error', 'registerAlert');
+                return false;
+            }
+
+            // Create new user
+            const newUser = {
+                id: MockDB.users.length + 1,
+                ...userData,
+                createdAt: new Date()
+            };
+
+            MockDB.users.push(newUser);
+            AppState.currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            updateAuthUI();
+            showPage('dashboard');
+            showAlert(`Welcome to GreenCREATE, ${newUser.name}!`);
+            return true;
+        }
+
+        function logout() {
+            AppState.currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            showPage('home');
+            showAlert('You have been logged out successfully');
+        }
+
+        function updateAuthUI() {
+            const authButtons = document.getElementById('authButtons');
+            const userMenu = document.getElementById('userMenu');
+            const userAvatar = document.getElementById('userAvatar');
+
+            if (AppState.currentUser) {
+                authButtons.style.display = 'none';
+                userMenu.classList.add('active');
+                userAvatar.textContent = AppState.currentUser.name.charAt(0).toUpperCase();
+            } else {
+                authButtons.style.display = 'flex';
+                userMenu.classList.remove('active');
+            }
+        }
+
+        // Data Loading Functions
+        function loadProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            if (!productsGrid) return;
+
+            const productsHTML = MockDB.products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.image}
+                    </div>
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin: 0.5rem 0;">
+                            by ${product.farmerName}
+                        </p>
+                        <p style="margin: 0.5rem 0;">${product.description}</p>
+                        <div class="price">${product.price}/${product.unit}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin: 1rem 0;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: #ffc107;">★</span>
+                                <span>${product.rating}</span>
+                                <span style="color: #666;">(${product.reviews})</span>
+                            </div>
+                            <div style="color: var(--success); font-weight: bold;">
+                                ${product.inStock ? 'In Stock' : 'Out of Stock'}
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 0.5rem; margin: 1rem 0;">
+                            ${product.certifications.map(cert => 
+                                `<span style="background: var(--light-green); color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">${cert}</span>`
+                            ).join('')}
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="addToCart(${product.id})" ${!product.inStock ? 'disabled' : ''}>
+                            ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            productsGrid.innerHTML = productsHTML;
+        }
+
+        function loadDashboard() {
+            if (!AppState.currentUser) {
+                showPage('login');
+                return;
+            }
+
+            const consumerDashboard = document.getElementById('consumerDashboard');
+            const farmerDashboard = document.getElementById('farmerDashboard');
+
+            if (AppState.currentUser.type === 'consumer') {
+                consumerDashboard.style.display = 'block';
+                farmerDashboard.style.display = 'none';
+                loadConsumerDashboard();
+            } else {
+                consumerDashboard.style.display = 'none';
+                farmerDashboard.style.display = 'block';
+                loadFarmerDashboard();
+            }
+        }
+
+        function loadConsumerDashboard() {
+            const userOrders = MockDB.orders.filter(order => order.customerId === AppState.currentUser.id);
+            const recentOrdersTable = document.getElementById('recentOrdersTable');
+
+            const ordersHTML = userOrders.slice(0, 5).map(order => `
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 1rem;">${order.id}</td>
+                    <td style="padding: 1rem;">${order.farmerName}</td>
+                    <td style="padding: 1rem;">${order.items.length} items</td>
+                    <td style="padding: 1rem;">
+                        <span style="background: ${getStatusColor(order.status)}; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">
+                            ${order.status.toUpperCase()}
+                        </span>
+                    </td>
+                    <td style="padding: 1rem; font-weight: bold;">${order.total}</td>
+                </tr>
+            `).join('');
+
+            recentOrdersTable.innerHTML = ordersHTML;
+        }
+
+        function loadFarmerDashboard() {
+            const farmerOrders = MockDB.orders.filter(order => order.farmerId === AppState.currentUser.id);
+            const farmerRecentOrders = document.getElementById('farmerRecentOrders');
+
+            const ordersHTML = farmerOrders.slice(0, 5).map(order => `
+                <div style="border-bottom: 1px solid #eee; padding: 1rem 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                        <strong>${order.id}</strong>
+                        <span style="background: ${getStatusColor(order.status)}; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.8rem;">
+                            ${order.status.toUpperCase()}
+                        </span>
+                    </div>
+                    <div style="color: #666; font-size: 0.9rem;">
+                        ${order.items.length} items • ${order.total}
+                    </div>
+                    <div style="color: #666; font-size: 0.8rem;">
+                        Ordered: ${new Date(order.orderDate).toLocaleDateString()}
+                    </div>
+                </div>
+            `).join('');
+
+            farmerRecentOrders.innerHTML = ordersHTML;
+        }
+
+        function loadOrders() {
+            if (!AppState.currentUser) {
+                showPage('login');
+                return;
+            }
+
+            const userOrders = MockDB.orders.filter(order => 
+                AppState.currentUser.type === 'consumer' 
+                    ? order.customerId === AppState.currentUser.id
+                    : order.farmerId === AppState.currentUser.id
+            );
+
+            const ordersContainer = document.getElementById('ordersContainer');
+            
+            const ordersHTML = userOrders.map(order => `
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="color: var(--primary-green);">${order.id}</h3>
+                            <p style="color: #666; margin: 0.25rem 0;">
+                                ${AppState.currentUser.type === 'consumer' ? `From: ${order.farmerName}` : `Customer Order`}
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: ${getStatusColor(order.status)}; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: bold;">
+                                ${order.status.toUpperCase()}
+                            </span>
+                            <div style="margin-top: 0.5rem; font-size: 1.2rem; font-weight: bold;">
+                                ${order.total}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="border-top: 1px solid #eee; padding-top: 1rem;">
+                        <h4 style="margin-bottom: 0.5rem;">Items:</h4>
+                        ${order.items.map(item => `
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                                <span>${item.name} x ${item.quantity}</span>
+                                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #eee;">
+                        <div style="color: #666;">
+                            <div>Order Date: ${new Date(order.orderDate).toLocaleDateString()}</div>
+                            ${order.deliveryDate ? `<div>Delivery: ${new Date(order.deliveryDate).toLocaleDateString()}</div>` : ''}
+                            ${order.trackingId ? `<div>Tracking: ${order.trackingId}</div>` : ''}
+                        </div>
+                        <div style="display: flex; gap: 0.5rem;">
+                            ${order.status === 'delivered' && !order.rating ? `
+                                <button class="btn btn-secondary" onclick="rateOrder('${order.id}')">Rate Order</button>
+                            ` : ''}
+                            <button class="btn btn-primary" onclick="viewOrderDetails('${order.id}')">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            ordersContainer.innerHTML = ordersHTML || '<div class="card"><p style="text-align: center; color: #666;">No orders found.</p></div>';
+        }
+
+        function loadProfile() {
+            if (!AppState.currentUser) {
+                showPage('login');
+                return;
+            }
+
+            const user = AppState.currentUser;
+            document.getElementById('profileName').value = user.name || '';
+            document.getElementById('profileEmail').value = user.email || '';
+            document.getElementById('profilePhone').value = user.phone || '';
+            document.getElementById('profileAddress').value = user.address || user.farmAddress || '';
+        }
+
+        // Helper Functions
+        function getStatusColor(status) {
+            const colors = {
+                'pending': '#ffc107',
+                'confirmed': '#17a2b8',
+                'shipped': '#fd7e14',
+                'delivered': '#28a745',
+                'cancelled': '#dc3545'
+            };
+            return colors[status] || '#6c757d';
+        }
+
+        function addToCart(productId) {
+            const product = MockDB.products.find(p => p.id === productId);
+            if (product && AppState.currentUser) {
+                showAlert(`${product.name} added to cart!`);
+                // In a real app, this would add to cart state/database
+            } else if (!AppState.currentUser) {
+                showAlert('Please login to add items to cart', 'error');
+                showPage('login');
+            }
+        }
+
+        function rateOrder(orderId) {
+            const rating = prompt('Please rate this order (1-5 stars):');
+            if (rating && rating >= 1 && rating <= 5) {
+                const order = MockDB.orders.find(o => o.id === orderId);
+                if (order) {
+                    order.rating = parseInt(rating);
+                    showAlert(`Thank you for rating this order ${rating} stars!`);
+                    loadOrders();
+                }
+            }
+        }
+
+        function viewOrderDetails(orderId) {
+            const order = MockDB.orders.find(o => o.id === orderId);
+            if (order) {
+                alert(`Order Details:\n\nOrder ID: ${order.id}\nItems: ${order.items.map(i => `${i.name} x ${i.quantity}`).join(', ')}\nTotal: ${order.total}\nStatus: ${order.status}`);
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                AppState.currentUser = JSON.parse(savedUser);
+                updateAuthUI();
+            }
+
+            // Login Form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                if (!validateForm('loginForm')) {
+                    showAlert('Please fill in all required fields', 'error', 'loginAlert');
+                    return;
+                }
+
+                const loginBtn = document.getElementById('loginBtn');
+                const originalText = loginBtn.innerHTML;
+                loginBtn.innerHTML = '<span class="loading"></span> Logging in...';
+                loginBtn.disabled = true;
+
+                setTimeout(() => {
+                    login(email, password);
+                    loginBtn.innerHTML = originalText;
+                    loginBtn.disabled = false;
+                }, 1000);
+            });
+
+            // Register Form
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    showAlert('Passwords do not match', 'error', 'registerAlert');
+                    return;
+                }
+
+                if (!validateForm('registerForm')) {
+                    showAlert('Please fill in all required fields', 'error', 'registerAlert');
+                    return;
+                }
+
+                const email = document.getElementById('registerEmail').value;
+                if (!validateEmail(email)) {
+                    showAlert('Please enter a valid email address', 'error', 'registerAlert');
+                    return;
+                }
+
+                const userType = document.querySelector('input[name="userType"]:checked').value;
+                const userData = {
+                    email: email,
+                    password: password,
+                    name: document.getElementById('registerName').value,
+                    phone: document.getElementById('registerPhone').value,
+                    type: userType
+                };
+
+                if (userType === 'consumer') {
+                    userData.address = document.getElementById('consumerAddress').value;
+                    userData.preferences = document.getElementById('consumerPreferences').value;
+                } else {
+                    userData.farmName = document.getElementById('farmName').value;
+                    userData.farmAddress = document.getElementById('farmAddress').value;
+                    userData.farmSize = parseFloat(document.getElementById('farmSize').value);
+                    userData.farmingType = document.getElementById('farmingType').value;
+                    userData.primaryCrops = document.getElementById('primaryCrops').value;
+                    userData.farmExperience = parseInt(document.getElementById('farmExperience').value);
+                }
+
+                const registerBtn = document.getElementById('registerBtn');
+                const originalText = registerBtn.innerHTML;
+                registerBtn.innerHTML = '<span class="loading"></span> Creating Account...';
+                registerBtn.disabled = true;
+
+                setTimeout(() => {
+                    register(userData);
+                    registerBtn.innerHTML = originalText;
+                    registerBtn.disabled = false;
+                }, 1500);
+            });
+
+            // Contact Form
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (!validateForm('contactForm')) {
+                    showAlert('Please fill in all required fields', 'error');
+                    return;
+                }
+
+                showAlert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+
+            // Profile Form
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (AppState.currentUser) {
+                    AppState.currentUser.name = document.getElementById('profileName').value;
+                    AppState.currentUser.email = document.getElementById('profileEmail').value;
+                    AppState.currentUser.phone = document.getElementById('profilePhone').value;
+                    
+                    if (AppState.currentUser.type === 'consumer') {
+                        AppState.currentUser.address = document.getElementById('profileAddress').value;
+                    } else {
+                        AppState.currentUser.farmAddress = document.getElementById('profileAddress').value;
+                    }
+                    
+                    localStorage.setItem('currentUser', JSON.stringify(AppState.currentUser));
+                    updateAuthUI();
+                    showAlert('Profile updated successfully!');
+                }
+            });
+
+            // Password Change Form
+            document.getElementById('passwordForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+                
+                if (!currentPassword || !newPassword || !confirmNewPassword) {
+                    showAlert('Please fill in all password fields', 'error');
+                    return;
+                }
+                
+                if (currentPassword !== AppState.currentUser.password) {
+                    showAlert('Current password is incorrect', 'error');
+                    return;
+                }
+                
+                if (newPassword !== confirmNewPassword) {
+                    showAlert('New passwords do not match', 'error');
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    showAlert('New password must be at least 6 characters long', 'error');
+                    return;
+                }
+                
+                AppState.currentUser.password = newPassword;
+                localStorage.setItem('currentUser', JSON.stringify(AppState.currentUser));
+                showAlert('Password changed successfully!');
+                this.reset();
+            });
+
+            // Click outside to close dropdowns
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu')) {
+                    document.getElementById('userDropdown').classList.remove('active');
+                }
+            });
+
+            // Initialize products on page load
+            loadProducts();
+        });
+
+        // Demo Functions for testing
+        function demoLogin(type) {
+            if (type === 'consumer') {
+                document.getElementById('loginEmail').value = 'demo@consumer.com';
+                document.getElementById('loginPassword').value = 'password123';
+            } else {
+                document.getElementById('loginEmail').value = 'demo@farmer.com';
+                document.getElementById('loginPassword').value = 'password123';
+            }
+        }
+
+        // Initialize app
+        console.log('GreenCREATE Platform Loaded');
+        console.log('Demo Accounts:');
+        console.log('Consumer: demo@consumer.com / password123');
+        console.log('Farmer: demo@farmer.com / password123');
+    </script>
+</body>
+</html>

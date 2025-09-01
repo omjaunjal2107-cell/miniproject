@@ -1,0 +1,86 @@
+body{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: rgba(207, 255, 149, 0.6);
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.login-container{
+    background: #fff;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    width: 320px;
+}
+h2{
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: green;
+    font-size: 30px;
+    font-family:'Times New Roman', Times, serif;
+} 
+p{
+    text-align:center;
+    margin-top: rem;
+    line-height: 0.5;
+}
+label{
+    display:block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #00660e;
+}
+input[type="email"],
+input[type="password"]{
+    width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.submit
+{
+    color: #fff;
+    width:100%;
+    padding: 0.6rem;
+    background-color: #00660e;
+    border:none;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover{
+    background-color : rgb(204, 255, 212);
+    color: black;
+}
+.extras {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+.extras a{
+    color: #000666CC;
+    text-decoration: none;
+}
+.extras a:hover{
+    text-decoration: underline;
+}
+.email{
+    color: #fff;
+    background-color: #00660e;
+    width: 90px;
+
+    padding: .4rem;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    border: none;
+}
+.file{
+    border: #1a6600cc;
+    width:100%;
+    background-color: #f3f8f4;
+}

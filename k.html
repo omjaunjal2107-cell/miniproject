@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hamburger Menu</title>
+  <style>
+    /* Basic header */
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: #1a4d2e;
+      color: white;
+    }
+
+    /* Hide checkbox */
+    #menu-toggle {
+      display: none;
+    }
+
+    /* Hamburger icon */
+    .menu-icon {
+      display: inline-block;
+      cursor: pointer;
+      width: 30px;
+      margin-right: 20px;
+    }
+    .menu-icon span {
+      display: block;
+      height: 3px;
+      background: white;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* Menu */
+    nav {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      padding: 10px;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li {
+      margin: 10px 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #1a4d2e;
+      font-weight: bold;
+    }
+
+    /* Show menu when checkbox checked */
+    #menu-toggle:checked + .menu-icon + nav {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <!-- Checkbox for toggle -->
+    <input type="checkbox" id="menu-toggle">
+    
+    <!-- 3 lines -->
+    <label for="menu-toggle" class="menu-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <!-- Menu -->
+    <nav>
+      <ul>
+        <li><a href="buyer.html">Buyer Dashboard</a></li>
+        <li><a href="farmer.html">Farmer Dashboard</a></li>
+      </ul>
+    </nav>
+
+    <!-- Logo -->
+    <h2>GreenCREATE</h2>
+  </header>
+
+</body>
+</html>

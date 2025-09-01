@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Pesticide Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2c5530 0%, #4a7c59 50%, #6ba368 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="40" r="1.5" fill="rgba(255,255,255,0.08)"/><circle cx="35" cy="70" r="0.8" fill="rgba(255,255,255,0.12)"/><circle cx="80" cy="25" r="1.2" fill="rgba(255,255,255,0.09)"/><circle cx="15" cy="85" r="0.9" fill="rgba(255,255,255,0.11)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section:nth-child(even) {
+            background: #f8fdf9;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2c5530;
+            font-weight: 700;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #ff6b35;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .problem-card h3 {
+            color: #2c5530;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .solution {
+            background: linear-gradient(135deg, #4a7c59 0%, #6ba368 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .solution-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 4px solid #4a7c59;
+        }
+
+        .benefit:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            color: #4a7c59;
+            margin-bottom: 1rem;
+        }
+
+        .stakeholders {
+            background: #2c5530;
+            color: white;
+        }
+
+        .stakeholders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stakeholder {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stakeholder:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background: #1a3a1f;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .stat {
+            background: rgba(255,255,255,0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff6b35;
+            display: block;
+        }
+
+        .highlight-text {
+            background: linear-gradient(120deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Smart Pesticide Management</h1>
+            <p>Revolutionizing agriculture with AI-powered precision spraying for sustainable farming</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">70%</span>
+                    <span>Pesticide Reduction</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">40%</span>
+                    <span>Cost Savings</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">95%</span>
+                    <span>Detection Accuracy</span>
+                </div>
+            </div>
+            <a href="#solution" class="cta-button">Discover the Solution</a>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">The Critical Problem</h2>
+            <div class="problem-grid">
+                <div class="problem-card animate-on-scroll">
+                    <h3>🌱 Environmental Damage</h3>
+                    <p>Excessive pesticide use causes soil degradation, water contamination, and kills beneficial insects essential for ecosystem balance.</p>
+                </div>
+                <div class="problem-card animate-on-scroll">
+                    <h3>💰 Economic Waste</h3>
+                    <p>Blanket spraying wastes chemicals and money, treating healthy plants unnecessarily while missing targeted problem areas.</p>
+                </div>
+                <div class="problem-card animate-on-scroll">
+                    <h3>👨‍🌾 Labor Challenges</h3>
+                    <p>Manual inspections are time-consuming, labor-intensive, and often inaccurate, especially for small and marginal farmers.</p>
+                </div>
+                <div class="problem-card animate-on-scroll">
+                    <h3>🏥 Health Risks</h3>
+                    <p>Overuse of pesticides poses serious health risks to farmers, their families, and consumers of agricultural products.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section solution" id="solution">
+        <div class="container">
+            <h2 class="section-title">Our <span class="highlight-text">Intelligent Solution</span></h2>
+            <p style="font-size: 1.2rem; text-align: center; margin-bottom: 2rem; opacity: 0.95;">
+                An AI-powered system that detects plant diseases and pests with precision, applying pesticides only where needed
+            </p>
+            
+            <div class="solution-features">
+                <div class="feature animate-on-scroll">
+                    <span class="feature-icon">📸</span>
+                    <h3>AI Vision System</h3>
+                    <p>Advanced cameras and sensors detect pest infections and diseases with 95% accuracy using machine learning algorithms.</p>
+                </div>
+                <div class="feature animate-on-scroll">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Precision Spraying</h3>
+                    <p>IoT-controlled sprayers target only infected areas, reducing pesticide usage by up to 70% while maintaining crop health.</p>
+                </div>
+                <div class="feature animate-on-scroll">
+                    <span class="feature-icon">📱</span>
+                    <h3>Remote Monitoring</h3>
+                    <p>Mobile and web interfaces allow farmers to monitor crop health and control the system from anywhere, anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title animate-on-scroll">Transformative Impact</h2>
+            <div class="benefits">
+                <div class="benefit animate-on-scroll">
+                    <div class="benefit-icon">💚</div>
+                    <h3>Environmental Protection</h3>
+                    <p>Protects soil and water quality while preserving beneficial insects and promoting biodiversity</p>
+                </div>
+                <div class="benefit animate-on-scroll">
+                    <div class="benefit-icon">📈</div>
+                    <h3>Increased Yields</h3>
+                    <p>Precise treatment improves crop quality and quantity through timely, targeted interventions</p>
+                </div>
+                <div class="benefit animate-on-scroll">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Cost Reduction</h3>
+                    <p>Significant savings on pesticide costs while reducing labor requirements for inspections</p>
+                </div>
+                <div class="benefit animate-on-scroll">
+                    <div class="benefit-icon">🌾</div>
+                    <h3>Sustainable Farming</h3>
+                    <p>Supports small farmers with affordable automation for more sustainable agricultural practices</p>
+                </div>
+                <div class="benefit animate-on-scroll">
+                    <div class="benefit-icon">🍎</div>
+                    <h3>Food Safety</h3>
+                    <p>Produces safer, residue-free food by minimizing unnecessary chemical applications</p>
+                </div>
+                <div class="benefit animate-on-scroll">
+                    <div class="benefit-icon">🚀</div>
+                    <h3>Future-Ready</h3>
+                    <p>Scalable technology that adapts to different farm sizes and crop types</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section stakeholders">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Key Stakeholders & Beneficiaries</h2>
+            <div class="stakeholders-grid">
+                <div class="stakeholder animate-on-scroll">
+                    <h3>👨‍🌾 Farmers</h3>
+                    <p>Small to large-scale agricultural producers</p>
+                </div>
+                <div class="stakeholder animate-on-scroll">
+                    <h3>🏛️ Government Bodies</h3>
+                    <p>Agencies promoting sustainable farming</p>
+                </div>
+                <div class="stakeholder animate-on-scroll">
+                    <h3>🧪 Agrochemical Companies</h3>
+                    <p>Chemical and technology providers</p>
+                </div>
+                <div class="stakeholder animate-on-scroll">
+                    <h3>🌍 Environmental Agencies</h3>
+                    <p>Organizations focused on ecological protection</p>
+                </div>
+                <div class="stakeholder animate-on-scroll">
+                    <h3>👥 Consumers</h3>
+                    <p>People demanding safe, residue-free produce</p>
+                </div>
+                <div class="stakeholder animate-on-scroll">
+                    <h3>📚 Extension Officers</h3>
+                    <p>Agricultural advisors and educators</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <div class="container">
+            <h3 style="margin-bottom: 1rem;">Ready to Transform Agriculture?</h3>
+            <p style="margin-bottom: 1.5rem;">Join the future of sustainable farming with intelligent pesticide management</p>
+            <a href="#contact" class="cta-button">Get Started Today</a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for CTA button
+        document.querySelector('a[href="#solution"]').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#solution').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with animate-on-scroll class
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+            animatedElements.forEach(el => observer.observe(el));
+        });
+
+        // Add floating animation to hero stats
+        const stats = document.querySelectorAll('.stat');
+        stats.forEach((stat, index) => {
+            stat.style.animation = `fadeInUp 1s ease-out ${0.6 + index * 0.2}s both`;
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.problem-card, .benefit, .stakeholder').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add pulsing effect to CTA buttons
+        setInterval(() => {
+            document.querySelectorAll('.cta-button').forEach(btn => {
+                btn.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                }, 200);
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

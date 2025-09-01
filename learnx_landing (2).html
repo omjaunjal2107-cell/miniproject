@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluido - Web Design Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e91e63 0%, #f06292 50%, #ec407a 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background decorative elements */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 80%;
+            height: 80%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header with curved background */
+        .header {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0 0 50% 50%;
+            z-index: -1;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            font-style: italic;
+        }
+
+        .nav {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        .login-btn {
+            padding: 12px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            align-items: center;
+            padding: 80px 50px 50px;
+            gap: 80px;
+            position: relative;
+        }
+
+        .left-content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 52px;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            color: #2d3748;
+        }
+
+        .hero-description {
+            color: #718096;
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 450px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .get-started-btn {
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
+        }
+
+        .get-started-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 107, 157, 0.4);
+        }
+
+        .watch-demo-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #718096;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .play-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .watch-demo-btn:hover {
+            color: #2d3748;
+        }
+
+        .watch-demo-btn:hover .play-icon {
+            transform: scale(1.1);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .social-text {
+            color: #a0aec0;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            background: #f7fafc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0aec0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .social-icon:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Right Content - Illustration */
+        .right-content {
+            flex: 1;
+            position: relative;
+            height: 500px;
+        }
+
+        .illustration-main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .illustration-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border-radius: 50px 50px 0 0;
+        }
+
+        .designer-character {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .character-body {
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 40px 40px 20px 20px;
+            position: relative;
+            animation: characterFloat 3s ease-in-out infinite;
+        }
+
+        .character-head {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: #fdbcb4;
+            border-radius: 50%;
+        }
+
+        .character-hair {
+            position: absolute;
+            top: -40px;
+            left: 45%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 40px;
+            background: #8b5a2b;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .character-arms {
+            position: absolute;
+            top: 20px;
+            left: -15px;
+            right: -15px;
+        }
+
+        .arm {
+            position: absolute;
+            width: 15px;
+            height: 40px;
+            background: #fdbcb4;
+            border-radius: 10px;
+        }
+
+        .arm.left { left: 0; }
+        .arm.right { right: 0; }
+
+        .laptop {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 80px;
+            background: #2d3748;
+            border-radius: 8px;
+            z-index: 5;
+        }
+
+        .laptop-screen {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 5px;
+        }
+
+        .laptop-keyboard {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            right: 10px;
+            height: 15px;
+            background: #4a5568;
+            border-radius: 3px;
+        }
+
+        /* Floating UI Elements */
+        .ui-element {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            animation: floatElements 4s ease-in-out infinite;
+        }
+
+        .message-bubble {
+            top: 80px;
+            right: 80px;
+            width: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .message-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid #764ba2;
+        }
+
+        .notification {
+            top: 60px;
+            left: 50px;
+            background: #10b981;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .design-tools {
+            bottom: 180px;
+            left: 30px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .tool {
+            width: 25px;
+            height: 25px;
+            border-radius: 6px;
+        }
+
+        .tool:nth-child(1) { background: #ff6b9d; }
+        .tool:nth-child(2) { background: #4ecdc4; }
+        .tool:nth-child(3) { background: #45b7d1; }
+
+        .coffee-cup {
+            position: absolute;
+            bottom: 40px;
+            right: 120px;
+            width: 30px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 0 0 15px 15px;
+            z-index: 6;
+        }
+
+        .coffee-cup::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            height: 20px;
+            background: #8b4513;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .coffee-cup::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: -8px;
+            width: 12px;
+            height: 15px;
+            border: 3px solid #ff9a9e;
+            border-left: none;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Decorative background elements */
+        .bg-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+
+        .shape-1 {
+            top: 20%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            background: #4ecdc4;
+            animation: rotate 10s linear infinite;
+        }
+
+        .shape-2 {
+            bottom: 30%;
+            left: 5%;
+            width: 60px;
+            height: 60px;
+            background: #ff6b9d;
+            animation: rotate 8s linear infinite reverse;
+        }
+
+        .floating-lines {
+            position: absolute;
+            top: 120px;
+            right: 140px;
+            z-index: 15;
+        }
+
+        .line {
+            width: 30px;
+            height: 3px;
+            background: #667eea;
+            margin: 6px 0;
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        .line:nth-child(2) {
+            width: 40px;
+            background: #ff6b9d;
+        }
+
+        .line:nth-child(3) {
+            width: 25px;
+            background: #4ecdc4;
+        }
+
+        /* Animations */
+        @keyframes characterFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0px); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        @keyframes floatElements {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-5px) scale(1.02); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header {
+                padding: 20px 25px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 40px 25px;
+                gap: 40px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .right-content {
+                height: 400px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .main-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">Fluido</div>
+            <nav class="nav">
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#contact">Contact</a>
+                <a href="#support">Support</a>
+                <a href="#login" class="login-btn">Login</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="left-content">
+                <h1 class="hero-title">
+                    Great Solutions To<br>
+                    Design Your Website
+                </h1>
+                
+                <p class="hero-description">
+                    Here is the opportunity to build up your website. Graph-
+                    ical components, structural advices, plans and many 
+                    more. Check out our services and make your company 
+                    outstanding.
+                </p>
+
+                <div class="cta-buttons">
+                    <button class="get-started-btn">Get Started</button>
+                    <a href="#demo" class="watch-demo-btn">
+                        <div class="play-icon">▶</div>
+                        <span>Watch Demo</span>
+                    </a>
+                </div>
+
+                <div class="social-links">
+                    <span class="social-text">Follow Us</span>
+                    <a href="#" class="social-icon">f</a>
+                    <a href="#" class="social-icon">in</a>
+                    <a href="#" class="social-icon">ig</a>
+                    <a href="#" class="social-icon">@</a>
+                    <a href="#" class="social-icon">tw</a>
+                </div>
+            </div>
+
+            <div class="right-content">
+                <div class="illustration-main">
+                    <!-- Background gradient area -->
+                    <div class="illustration-bg"></div>
+                    
+                    <!-- Floating UI elements -->
+                    <div class="ui-element notification">✓ Design Complete</div>
+                    
+                    <div class="ui-element message-bubble">
+                        <div style="font-size: 12px; font-weight: 600;">New Project</div>
+                        <div style="font-size: 10px; opacity: 0.8; margin-top: 5px;">Let's create something amazing!</div>
+                    </div>
+
+                    <div class="floating-lines">
+                        <div class="line"></div>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="ui-element design-tools">
+                        <div class="tool"></div>
+                        <div class="tool"></div>
+                        <div class="tool"></div>
+                    </div>
+
+                    <!-- Main character -->
+                    <div class="designer-character">
+                        <div class="character-hair"></div>
+                        <div class="character-head"></div>
+                        <div class="character-body">
+                            <div class="character-arms">
+                                <div class="arm left"></div>
+                                <div class="arm right"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Laptop -->
+                    <div class="laptop">
+                        <div class="laptop-screen"></div>
+                        <div class="laptop-keyboard"></div>
+                    </div>
+
+                    <!-- Coffee cup -->
+                    <div class="coffee-cup"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add staggered animations to floating elements
+            const uiElements = document.querySelectorAll('.ui-element');
+            uiElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.5}s`;
+            });
+
+            // Get Started button interaction
+            document.querySelector('.get-started-btn').addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    alert('Welcome to Fluido! Let\'s start building your amazing website.');
+                }, 150);
+            });
+
+            // Watch Demo button interaction
+            document.querySelector('.watch-demo-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const playIcon = this.querySelector('.play-icon');
+                playIcon.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    playIcon.style.transform = '';
+                    alert('Demo video would start here!\n\nLearn how we create:\n• Responsive designs\n• Modern UI/UX\n• Custom animations\n• SEO optimization');
+                }, 200);
+            });
+
+            // Social media links
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const platform = this.textContent;
+                    console.log(`Opening ${platform} social media page`);
+                    
+                    this.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+
+            // Navigation interactions
+            document.querySelectorAll('.nav a:not(.login-btn)').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.textContent;
+                    console.log(`Navigating to ${section} section`);
+                    
+                    // Visual feedback
+                    this.style.color = 'white';
+                    this.style.transform = 'translateY(-2px)';
+                    setTimeout(() => {
+                        this.style.color = '';
+                        this.style.transform = '';
+                    }, 300);
+                });
+            });
+
+            // Add mouse move parallax effect
+            document.addEventListener('mousemove', function(e) {
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                const uiElements = document.querySelectorAll('.ui-element');
+                uiElements.forEach((element, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = (mouseX - 0.5) * speed;
+                    const y = (mouseY - 0.5) * speed;
+                    element.style.transform = `translate(${x}px, ${y}px)`;
+                });
+            });
+        });
+
+        // Company data structure (JSON)
+        const companyData = {
+            "company": {
+                "name": "Fluido",
+                "tagline": "Great Solutions To Design Your Website",
+                "description": "Here is the opportunity to build up your website. Graphical components, structural advices, plans and many more. Check out our services and make your company outstanding."
+            },
+            "navigation": [
+                {"name": "About Us", "href": "#about"},
+                {"name": "Services", "href": "#services"},
+                {"name": "Contact", "href": "#contact"},
+                {"name": "Support", "href": "#support"}
+            ],
+            "services": [
+                {
+                    "name": "Web Design",
+                    "description": "Modern, responsive website designs",
+                    "icon": "🎨"
+                },
+                {
+                    "name": "UI/UX Design", 
+                    "description": "User-centered interface design",
+                    "icon": "💡"
+                },
+                {
+                    "name": "Development",
+                    "description": "Full-stack web development",
+                    "icon": "⚡"
+                },
+                {
+                    "name": "Branding",
+                    "description": "Complete brand identity solutions",
+                    "icon": "🚀"
+                }
+            ],
+            "socialMedia": [
+                {"platform": "Facebook", "icon": "f", "url": "#facebook"},
+                {"platform": "LinkedIn", "icon": "in", "url": "#linkedin"},
+                {"platform": "Instagram", "icon": "ig", "url": "#instagram"},
+                {"platform": "Email", "icon": "@", "url": "#email"},
+                {"platform": "Twitter", "icon": "tw", "url": "#twitter"}
+            ],
+            "colors": {
+                "primary": "#667eea",
+                "secondary": "#764ba2",
+                "accent": "#ff6b9d",
+                "background": "#e91e63",
+                "text": "#2d3748",
+                "textLight": "#718096"
+            },
+            "stats": {
+                "projectsCompleted": 150,
+                "happyClients": 200,
+                "yearsExperience": 5
+            }
+        };
+
+        // Make data globally available
+        window.companyData = companyData;
+    </script>
+</body>
+</html>
